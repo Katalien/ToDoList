@@ -2,11 +2,11 @@ ToDo List project backend
 =====
 ## The manual for deploying and configuring the application locally
 
--The application will be delivered as a jar archive.
--It is necessary that the JRE (Java Runtime Environment) was installed on the working machine.
--To run the application type in the command line:
+1. The application will be delivered as a jar archive.
+2. It is necessary that the JRE (Java Runtime Environment) was installed on the working machine.
+3. To run the application type in the command line:
 "java -Duser.timezone=GMT -jar <name of the file with the extension .jar>"
--All done, you've launched the application!
+4. sAll done, you've launched the application!
 
 ## The logic of the application
 The java application was written on Java using the framework Spring. It consists of a few layers (java packages):
