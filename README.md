@@ -15,9 +15,9 @@ The layer to work with database entities
 2. Repository
 The layer which implements internal work of Spring framework to get data from database
 3. Dto
-Intermediate layer to conect database with service layer
+Intermediate layer to connect database with service layer
 4. Service 
-The service package is neccecary to implements internal logic of the application and the relationship between user's requests and database
+The service package is necessary to implements internal logic of the application and the relationship between user's requests and database
 5. Controller
 The layer for all possible CRUD request
 
