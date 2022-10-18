@@ -22,6 +22,7 @@ The service package is necessary to implements internal logic of the application
 The layer for all possible CRUD request
 
 A link to the PostMan request collection is attached below
+Click import button and paste it to run collection
 https://www.getpostman.com/collections/5f0cdeb73311e723c93f
 
 
