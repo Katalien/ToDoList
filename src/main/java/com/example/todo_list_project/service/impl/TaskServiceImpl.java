@@ -29,8 +29,10 @@ public class TaskServiceImpl implements TaskService {
     @Override
     public TaskDto addTask(TaskDto task) {
         Task myTask = converter.convertToTask(task);
-        Tag tag = tagRepos.findByTagName(task.getTagName());
-        myTask.setTag(tag);
+        if(task.getTagName() != null) {
+            Tag tag = tagRepos.findByTagName(task.getTagName());
+            myTask.setTag(tag);
+        }
         TaskDto newTask = converter.convertToTaskDto(repos.saveAndFlush(myTask));
         return newTask;
     }

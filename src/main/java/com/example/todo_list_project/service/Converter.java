@@ -27,7 +27,9 @@ public class Converter {
         taskDto.setStatus(task.getStatus());
         taskDto.setEventDate(task.getEventDate());
         taskDto.setNotificationDate(task.getNotificationDate());
-        taskDto.setTagName(task.getTag().getTagName());
+        if(task.getTag() != null) {
+            taskDto.setTagName(task.getTag().getTagName());
+        }
         return taskDto;
     }
 
