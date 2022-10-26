@@ -2,15 +2,18 @@ package com.example.todo_list_project.controller;
 
 import com.example.todo_list_project.dao.Tag;
 import com.example.todo_list_project.dao.Task;
+import com.example.todo_list_project.dto.SearchTasks;
 import com.example.todo_list_project.dto.TagDto;
 import com.example.todo_list_project.dto.TaskDto;
 import com.example.todo_list_project.repository.TaskRepository;
 import com.example.todo_list_project.service.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -18,15 +21,16 @@ public class TaskController {
     @Autowired
     private TaskService service;
 
+//    @GetMapping("/tasks")
+//    public List<TaskDto> getTasks(){
+//        return service.getAll();
+//    };
+
     @GetMapping("/tasks")
-    public List<TaskDto> getTasks(){
-        return service.getAll();
+    public List<TaskDto> getTasks(SearchTasks searchTasks){
+        return service.getAllByCriteria(searchTasks);
     };
 
-    @GetMapping("/cat/status")
-    public String getTaskByTagUsingQueryParam(@RequestParam(name = "cat") String tagName, @RequestParam(name = "status") String status) {
-        return "TAG: " + tagName + "status" + status;
-    }
 
     @PostMapping("/tasks")
     void addTask(@RequestBody TaskDto task){
@@ -50,12 +54,12 @@ public class TaskController {
 
 
     @GetMapping("/tasks/date")
-    List<TaskDto> getByDate(@RequestParam(name = "date") LocalDate date){
+    List<TaskDto> getByDate(@RequestParam("date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date date){
         return service.getByDate(date);
     }
 
     @GetMapping("/tasks/tag/date")
-    List<TaskDto> getByTagAndDate(@RequestParam(name = "tag") TagDto tag, @RequestParam(name = "date") LocalDate date){
+    List<TaskDto> getByTagAndDate(@RequestParam(name = "tag") TagDto tag, @RequestParam(name = "date") Date date){
         return service.getByTagAndDate(tag, date);
     }
 

@@ -2,6 +2,7 @@ package com.example.todo_list_project.service.impl;
 
 import com.example.todo_list_project.dao.Tag;
 import com.example.todo_list_project.dao.Task;
+import com.example.todo_list_project.dto.SearchTasks;
 import com.example.todo_list_project.dto.TagDto;
 import com.example.todo_list_project.dto.TaskDto;
 import com.example.todo_list_project.repository.TagRepository;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -69,7 +71,7 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public List<TaskDto> getByDate(LocalDate eventDate) {
+    public List<TaskDto> getByDate(Date eventDate) {
         return repos.findByEventDate(eventDate).stream()
                 .map(el -> converter.convertToTaskDto(el))
                 .collect(Collectors.toList());
@@ -92,7 +94,7 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public List<TaskDto>getByTagAndDate(TagDto tagDto, LocalDate date){
+    public List<TaskDto>getByTagAndDate(TagDto tagDto, Date date){
         Tag tag = converter.convertToTag(tagDto);
         return repos.findByTagAndEventDate(tag, date).stream()
                 .map(el -> converter.convertToTaskDto(el))
@@ -113,6 +115,16 @@ public class TaskServiceImpl implements TaskService {
     @Override
     public void deleteTask(long id){
         repos.deleteById(id);
+    }
+
+    @Override
+    public List<TaskDto> getAllByCriteria(SearchTasks searchTasks) {
+        List<Task> tasks = repos.findByCriteria(searchTasks);
+        List<TaskDto> tasksDto = new ArrayList<>();
+        for (Task task : tasks){
+            tasksDto.add(converter.convertToTaskDto(task));
+        }
+        return tasksDto;
     }
 
 }

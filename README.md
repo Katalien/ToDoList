@@ -2,11 +2,9 @@ ToDo List project backend
 =====
 ## The manual for deploying and configuring the application locally
 
-1. The application will be delivered as a jar archive.
+1. Clone repo from GitHub on your local machine.
 2. It is necessary that the JRE (Java Runtime Environment) was installed on the working machine.
-3. To run the application type in the command line:
-"java -Duser.timezone=GMT -jar <name of the file with the extension .jar>"
-4. sAll done, you've launched the application!
+3. Click Run to start the application
 
 ## The logic of the application
 The java application was written on Java using the framework Spring. It consists of a few layers (java packages):
@@ -20,11 +18,6 @@ Intermediate layer to connect database with service layer
 The service package is necessary to implements internal logic of the application and the relationship between user's requests and database
 5. Controller
 The layer for all possible CRUD request
-
-A link to the PostMan request collection is attached below
-Click import button and paste it to run collection
-https://www.getpostman.com/collections/5f0cdeb73311e723c93f
-
 
 
 

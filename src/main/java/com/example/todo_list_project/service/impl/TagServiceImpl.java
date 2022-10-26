@@ -10,6 +10,9 @@ import com.example.todo_list_project.service.TagService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 public class TagServiceImpl implements TagService {
 
@@ -18,6 +21,17 @@ public class TagServiceImpl implements TagService {
 
     @Autowired
     Converter converter;
+
+    public List<TagDto> getAll() {
+        List<Tag> tags = repos.findAll();
+        List<TagDto> tasksDto = new ArrayList<>();
+        for (Tag tag : tags){
+            tasksDto.add(converter.convertToTagDto(tag));
+        }
+        return tasksDto;
+    }
+
+
 
     @Override
     public TagDto addTag(TagDto tag){

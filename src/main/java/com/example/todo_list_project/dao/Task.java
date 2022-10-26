@@ -6,6 +6,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.Date;
 
 @Entity
 @Getter
@@ -29,10 +30,10 @@ public class Task {
     Tag tag;
 
     @Column
-    LocalDate eventDate;
+    Date eventDate;
 
     @Column
-    LocalDate notificationDate;
+    Date notificationDate;
 
     @Column
     String status;
