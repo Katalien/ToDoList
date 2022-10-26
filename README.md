@@ -20,6 +20,12 @@ The service package is necessary to implements internal logic of the application
 The layer for all possible CRUD request
 
 
+## Current Version
+At the moment there are all necessary code to work with tasks (add, edit, delete, make different requests)
+
+## Plans
+1. Add user's entity
+
 
  
 
