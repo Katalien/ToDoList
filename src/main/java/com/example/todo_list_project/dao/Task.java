@@ -5,7 +5,6 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.time.LocalDate;
 import java.util.Date;
 
 @Entity
@@ -25,7 +24,7 @@ public class Task {
     @Column
     String comment;
 
-    @ManyToOne(fetch = FetchType.EAGER, optional = true) // когда я получаю таск я хочу получать инфу о теге сразу
+    @ManyToOne(fetch = FetchType.EAGER, optional = true)
     @JoinTable(name = "tag_id")
     Tag tag;
 
@@ -37,6 +36,14 @@ public class Task {
 
     @Column
     String status;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private UserAccount userAccount;
+
+
+    @JoinColumn(name = "user_email")
+    private String userEmail;
 
     @Override
     public boolean equals(Object o) {

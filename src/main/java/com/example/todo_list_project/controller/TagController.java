@@ -14,7 +14,6 @@ public class TagController {
     @Autowired
     private TagService service;
 
-
     @PostMapping("/tags")
     void addNewTag(@RequestBody TagDto tag){
         service.addTag(tag);
@@ -24,7 +23,6 @@ public class TagController {
     public List<TagDto> getTags(){
         return service.getAll();
     };
-
 
     @DeleteMapping("/tag/{id}")
     void deleteTag(@PathVariable("id") long id ){

@@ -9,19 +9,15 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
-import java.time.Instant;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Date;
 import java.util.List;
 
 public class CustomTaskRepositoryImpl implements CustomTaskRepository {
-
     @Autowired
     EntityManager em;
 
     @Override
-    public List<Task> findByCriteria(SearchTasks searchTask) {
+    public List<Task> findByCriteria(SearchTasks searchTask, String email) {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Task> cq = cb.createQuery(Task.class);
 
@@ -32,15 +28,14 @@ public class CustomTaskRepositoryImpl implements CustomTaskRepository {
             predicates.add(cb.equal(task.get("tag").get("tagName"), searchTask.getTag()));
         }
         if (searchTask.getDate() != null) {
-//            Date newDate = Date.from(Instant.parse(searchTask.getDate()));
             predicates.add(cb.equal(task.get("eventDate"), searchTask.getDate() ));
         }
         if (searchTask.getStatus() != null) {
             predicates.add(cb.equal(task.get("status"), searchTask.getStatus()));
         }
-        cq.where(predicates.toArray(new Predicate[0]));
+        predicates.add(cb.equal(task.get("userEmail"), email));
 
+        cq.where(predicates.toArray(new Predicate[0]));
         return em.createQuery(cq).getResultList();
     }
-
 }

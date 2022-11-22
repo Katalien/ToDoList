@@ -2,7 +2,6 @@ package com.example.todo_list_project.dto;
 
 import lombok.Data;
 
-import java.time.LocalDate;
 import java.util.Date;
 
 @Data
@@ -14,4 +13,5 @@ public class TaskDto {
     Date notificationDate;
     String status;
     String tagName;
+    String userEmail;
 }

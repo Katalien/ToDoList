@@ -15,7 +15,6 @@ import java.util.List;
 
 @Service
 public class TagServiceImpl implements TagService {
-
     @Autowired
     TagRepository repos;
 
@@ -31,8 +30,6 @@ public class TagServiceImpl implements TagService {
         return tasksDto;
     }
 
-
-
     @Override
     public TagDto addTag(TagDto tag){
         Tag newTag = repos.saveAndFlush(converter.convertToTag(tag));
@@ -43,5 +40,4 @@ public class TagServiceImpl implements TagService {
     public void deleteTag(long id){
         repos.deleteById(id);
     }
-
 }

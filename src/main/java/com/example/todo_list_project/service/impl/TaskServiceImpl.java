@@ -3,7 +3,6 @@ package com.example.todo_list_project.service.impl;
 import com.example.todo_list_project.dao.Tag;
 import com.example.todo_list_project.dao.Task;
 import com.example.todo_list_project.dto.SearchTasks;
-import com.example.todo_list_project.dto.TagDto;
 import com.example.todo_list_project.dto.TaskDto;
 import com.example.todo_list_project.repository.TagRepository;
 import com.example.todo_list_project.repository.TaskRepository;
@@ -12,11 +11,9 @@ import com.example.todo_list_project.service.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Optional;
 
 @Service
 public class TaskServiceImpl implements TaskService {
@@ -29,35 +26,53 @@ public class TaskServiceImpl implements TaskService {
     Converter converter;
 
     @Override
-    public TaskDto addTask(TaskDto task) {
+    public TaskDto addTask(TaskDto task, String email) {
         Task myTask = converter.convertToTask(task);
+        myTask.setUserEmail(email);
         if(task.getTagName() != null) {
             Tag tag = tagRepos.findByTagName(task.getTagName());
             myTask.setTag(tag);
         }
         TaskDto newTask = converter.convertToTaskDto(repos.saveAndFlush(myTask));
+        newTask.setUserEmail(email);
         return newTask;
     }
 
     @Override
-    public TaskDto getById(long id){
-        return converter.convertToTaskDto(repos.findById(id).orElse(null));
-    }
-
-    @Override
-    public void delete(long id) {
-        repos.deleteById(id);
-    }
-
-    @Override
-    public TaskDto getByName(String name) {
-        return converter.convertToTaskDto(repos.findByName(name));
-    }
-
-    @Override
-    public TaskDto editTask(TaskDto task) {
-        Task myTask = converter.convertToTask(task);
-        return converter.convertToTaskDto(repos.saveAndFlush(myTask));
+    public TaskDto editTask(TaskDto taskToEditDto, String email) {
+        Task taskToEdit  = converter.convertToTask(taskToEditDto);
+        Optional<Task> oldTaskOptional = repos.findById(taskToEdit.getId());
+        Task oldTask = oldTaskOptional.orElse(null);
+        Task newTask = new Task();
+        newTask.setId(oldTask.getId());
+        newTask.setUserAccount(oldTask.getUserAccount());
+        if(oldTask.getName() != taskToEdit.getName()){
+            newTask.setName(taskToEdit.getName());
+        }
+        else{
+            newTask.setName(oldTask.getName());
+        }
+        if(oldTask.getComment()!= taskToEdit.getComment()){
+            newTask.setComment(taskToEdit.getComment());
+        }
+        else{
+            newTask.setComment(oldTask.getComment());
+        }
+        if(oldTask.getTag()!= taskToEdit.getTag()){
+            newTask.setTag(taskToEdit.getTag());
+        }
+        else{
+            newTask.setTag(oldTask.getTag());
+        }
+        if(oldTask.getEventDate()!= taskToEdit.getEventDate()){
+            newTask.setEventDate(taskToEdit.getEventDate());
+        }
+        else{
+            newTask.setEventDate(oldTask.getEventDate());
+        }
+        repos.deleteById(oldTask.getId());
+        repos.saveAndFlush(newTask);
+        return converter.convertToTaskDto(newTask);
     }
 
     @Override
@@ -71,45 +86,33 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public List<TaskDto> getByDate(Date eventDate) {
-        return repos.findByEventDate(eventDate).stream()
-                .map(el -> converter.convertToTaskDto(el))
-                .collect(Collectors.toList());
-    }
-
-    @Override
-    public List<TaskDto> getByTag(String tagName) {
-
-        List<TaskDto> tasks = repos.findByTagTagName(tagName).stream()
-                .map(el -> converter.convertToTaskDto(el))
-                .collect(Collectors.toList());
-        return tasks;
-    }
-
-    @Override
-    public List<TaskDto>getByStatus(String status){
-        return repos.findByStatus(status).stream()
-                .map(el -> converter.convertToTaskDto(el))
-                .collect(Collectors.toList());
-    }
-
-    @Override
-    public List<TaskDto>getByTagAndDate(TagDto tagDto, Date date){
-        Tag tag = converter.convertToTag(tagDto);
-        return repos.findByTagAndEventDate(tag, date).stream()
-                .map(el -> converter.convertToTaskDto(el))
-                .collect(Collectors.toList());
-    }
-    @Override
-   public List<TaskDto>getByTagAndStatus(TagDto tagDto, String status){
-        Tag tag = converter.convertToTag(tagDto);
-        return repos.findByTagAndStatus(tag, status).stream()
-                .map(el -> converter.convertToTaskDto(el))
-                .collect(Collectors.toList());
-    }
-    @Override
-    public TaskDto editTask(long id){
-       return new TaskDto();
+    public TaskDto editTask(long id, TaskDto taskWithChanges){
+        Optional<Task> taskToEdit = repos.findById(id);
+        TaskDto taskToEditDto = converter.convertToTaskDto(taskToEdit.get());
+        if(taskToEditDto == null){
+            return null;
+        }
+        if(!taskToEditDto.getName().equals( taskWithChanges.getName())){
+            taskToEditDto.setName(taskWithChanges.getName());
+        }
+        if(!taskToEditDto.getTagName().equals( taskWithChanges.getTagName())){
+            taskToEditDto.setTagName(taskWithChanges.getTagName());
+        }
+        if(!taskToEditDto.getComment().equals( taskWithChanges.getComment())){
+            taskToEditDto.setComment(taskWithChanges.getComment());
+        }
+        if(!taskToEditDto.getStatus().equals( taskWithChanges.getStatus())){
+            taskToEditDto.setStatus(taskWithChanges.getStatus());
+        }
+        if(taskToEditDto.getEventDate() != taskWithChanges.getEventDate()){
+            taskToEditDto.setEventDate(taskWithChanges.getEventDate());
+        }
+        if(taskToEditDto.getNotificationDate() != taskWithChanges.getNotificationDate()){
+            taskToEditDto.setNotificationDate(taskWithChanges.getNotificationDate());
+        }
+        repos.deleteById(id);
+        repos.saveAndFlush(converter.convertToTask(taskToEditDto));
+       return taskToEditDto;
     }
 
     @Override
@@ -118,8 +121,8 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public List<TaskDto> getAllByCriteria(SearchTasks searchTasks) {
-        List<Task> tasks = repos.findByCriteria(searchTasks);
+    public List<TaskDto> getAllByCriteria(SearchTasks searchTasks, String email) {
+        List<Task> tasks = repos.findByCriteria(searchTasks, email);
         List<TaskDto> tasksDto = new ArrayList<>();
         for (Task task : tasks){
             tasksDto.add(converter.convertToTaskDto(task));
