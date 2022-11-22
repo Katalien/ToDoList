@@ -4,7 +4,8 @@ ToDo List project backend
 
 1. Clone repo from GitHub on your local machine.
 2. It is necessary that the JRE (Java Runtime Environment) was installed on the working machine.
-3. Click Run to start the application
+3. All necessary dependencies are written in pom.xml file. 
+4. Click Build and then Run to start the application
 
 ## The logic of the application
 The java application was written on Java using the framework Spring. It consists of a few layers (java packages):
@@ -21,11 +22,13 @@ The layer for all possible CRUD request
 
 
 ## Current Version
-At the moment there are all necessary code to work with tasks (add, edit, delete, make different requests)
+- Since the last checkpoint user authorization was added. I've added web security dependencies and necessary classes to provide safe request from user and disable cors policy, which block request from user.
+- User account was added and bound to task via sql relationship.
+- All endpoints have been changes taking the user into account, therefore each user has its own list of tasks.
+- I've begun to write patch request for task edition. However, it doesn't work correctly at the moment.
 
-## Plans
-1. Add user's entity
-
+## Plans 
+- Fix task editing request
 
  
 
