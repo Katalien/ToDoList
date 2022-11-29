@@ -23,15 +23,16 @@ public class TaskController {
     };
 
     @PostMapping("/tasks")
-    void addTask(@RequestBody TaskDto task,  @AuthenticationPrincipal OAuth2User principal){
+    TaskDto addTask(@RequestBody TaskDto task,  @AuthenticationPrincipal OAuth2User principal){
         String email = principal.getAttribute("email");
-        service.addTask(task, email);
+        TaskDto taskDto = service.addTask(task, email);
+        return taskDto;
     }
 
-    @PatchMapping("/tasks")
-    void editTask(@RequestBody TaskDto task,  @AuthenticationPrincipal OAuth2User principal){
+    @PatchMapping("/tasks/{id:\\d+}")
+    void editTask(@PathVariable Long id, @RequestBody TaskDto task,  @AuthenticationPrincipal OAuth2User principal){
         String email = principal.getAttribute("email");
-        service.editTask(task, email);
+        service.editTask(id, task, email);
     }
 
     @DeleteMapping("/tasks/id")

@@ -49,7 +49,7 @@ public class ToDoApp {
         final CorsConfiguration configuration = new CorsConfiguration();
 
         configuration.setAllowedOrigins(asList("http://localhost:8081"));
-        configuration.setAllowedMethods(asList("GET", "POST", "PUT", "DELETE"));
+        configuration.setAllowedMethods(asList("GET","PATCH", "POST", "PUT", "DELETE"));
         configuration.setAllowCredentials(true);
         configuration.setAllowedHeaders(
                 asList("Authorization", "Cache-Control", "Content-Type", "x-xsrf-token"));

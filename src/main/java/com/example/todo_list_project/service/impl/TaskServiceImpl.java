@@ -10,6 +10,7 @@ import com.example.todo_list_project.service.Converter;
 import com.example.todo_list_project.service.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,40 +40,22 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public TaskDto editTask(TaskDto taskToEditDto, String email) {
-        Task taskToEdit  = converter.convertToTask(taskToEditDto);
-        Optional<Task> oldTaskOptional = repos.findById(taskToEdit.getId());
-        Task oldTask = oldTaskOptional.orElse(null);
-        Task newTask = new Task();
-        newTask.setId(oldTask.getId());
-        newTask.setUserAccount(oldTask.getUserAccount());
-        if(oldTask.getName() != taskToEdit.getName()){
-            newTask.setName(taskToEdit.getName());
+    @Transactional
+    public void editTask(Long id, TaskDto taskToEdit, String email) {
+        Optional<Task> oldTaskOptional = repos.findById(id);
+        Task oldTask = oldTaskOptional.orElseThrow(()->new RuntimeException("no such id") );
+        if(taskToEdit.getName() != null && !oldTask.getName().equals(taskToEdit.getName())){
+            oldTask.setName(taskToEdit.getName());
         }
-        else{
-            newTask.setName(oldTask.getName());
+        if((oldTask.getComment()==null && taskToEdit.getComment() !=null) ||
+                (oldTask.getComment()!=null && !oldTask.getComment().equals(taskToEdit.getComment()))){
+            oldTask.setComment(taskToEdit.getComment());
         }
-        if(oldTask.getComment()!= taskToEdit.getComment()){
-            newTask.setComment(taskToEdit.getComment());
+        if((oldTask.getEventDate()==null && taskToEdit.getEventDate() !=null) ||
+                ( oldTask.getEventDate()!=null && !oldTask.getEventDate().equals(taskToEdit.getEventDate()))){
+            oldTask.setEventDate(taskToEdit.getEventDate());
         }
-        else{
-            newTask.setComment(oldTask.getComment());
-        }
-        if(oldTask.getTag()!= taskToEdit.getTag()){
-            newTask.setTag(taskToEdit.getTag());
-        }
-        else{
-            newTask.setTag(oldTask.getTag());
-        }
-        if(oldTask.getEventDate()!= taskToEdit.getEventDate()){
-            newTask.setEventDate(taskToEdit.getEventDate());
-        }
-        else{
-            newTask.setEventDate(oldTask.getEventDate());
-        }
-        repos.deleteById(oldTask.getId());
-        repos.saveAndFlush(newTask);
-        return converter.convertToTaskDto(newTask);
+        repos.save(oldTask);
     }
 
     @Override

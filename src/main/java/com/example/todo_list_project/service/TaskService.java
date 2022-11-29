@@ -9,7 +9,7 @@ public interface TaskService {
 
    TaskDto addTask(TaskDto task, String email);
 
-   TaskDto editTask(TaskDto taskToEditDto, String email);
+   void editTask(Long ig, TaskDto taskToEditDto, String email);
 
     List<TaskDto> getAll();
 
