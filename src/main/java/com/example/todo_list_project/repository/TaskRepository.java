@@ -17,6 +17,6 @@ public interface TaskRepository extends JpaRepository<Task,Long>, CustomTaskRepo
     List<Task> findByEventDate(Date eventDate);
     List<Task> findByTagAndEventDate(Tag tag, Date eventDate);
     List<Task> findByTagAndStatus(Tag tag, String status);
-    List<Task> findAllByUserAccountLogin(String login);
+
 
 }

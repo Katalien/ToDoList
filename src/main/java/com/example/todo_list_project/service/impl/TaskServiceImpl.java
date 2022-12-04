@@ -47,12 +47,12 @@ public class TaskServiceImpl implements TaskService {
         if(taskToEdit.getName() != null && !oldTask.getName().equals(taskToEdit.getName())){
             oldTask.setName(taskToEdit.getName());
         }
-        if((oldTask.getComment()==null && taskToEdit.getComment() !=null) ||
-                (oldTask.getComment()!=null && !oldTask.getComment().equals(taskToEdit.getComment()))){
+        if(taskToEdit.getComment() != null && ((oldTask.getComment()==null && taskToEdit.getComment() !=null) ||
+                (oldTask.getComment()!=null && !oldTask.getComment().equals(taskToEdit.getComment())))){
             oldTask.setComment(taskToEdit.getComment());
         }
-        if((oldTask.getEventDate()==null && taskToEdit.getEventDate() !=null) ||
-                ( oldTask.getEventDate()!=null && !oldTask.getEventDate().equals(taskToEdit.getEventDate()))){
+        if(taskToEdit.getEventDate() != null && ((oldTask.getEventDate()==null && taskToEdit.getEventDate() !=null) ||
+                ( oldTask.getEventDate()!=null && !oldTask.getEventDate().equals(taskToEdit.getEventDate())))){
             oldTask.setEventDate(taskToEdit.getEventDate());
         }
         repos.save(oldTask);
@@ -66,36 +66,6 @@ public class TaskServiceImpl implements TaskService {
             tasksDto.add(converter.convertToTaskDto(task));
         }
         return tasksDto;
-    }
-
-    @Override
-    public TaskDto editTask(long id, TaskDto taskWithChanges){
-        Optional<Task> taskToEdit = repos.findById(id);
-        TaskDto taskToEditDto = converter.convertToTaskDto(taskToEdit.get());
-        if(taskToEditDto == null){
-            return null;
-        }
-        if(!taskToEditDto.getName().equals( taskWithChanges.getName())){
-            taskToEditDto.setName(taskWithChanges.getName());
-        }
-        if(!taskToEditDto.getTagName().equals( taskWithChanges.getTagName())){
-            taskToEditDto.setTagName(taskWithChanges.getTagName());
-        }
-        if(!taskToEditDto.getComment().equals( taskWithChanges.getComment())){
-            taskToEditDto.setComment(taskWithChanges.getComment());
-        }
-        if(!taskToEditDto.getStatus().equals( taskWithChanges.getStatus())){
-            taskToEditDto.setStatus(taskWithChanges.getStatus());
-        }
-        if(taskToEditDto.getEventDate() != taskWithChanges.getEventDate()){
-            taskToEditDto.setEventDate(taskWithChanges.getEventDate());
-        }
-        if(taskToEditDto.getNotificationDate() != taskWithChanges.getNotificationDate()){
-            taskToEditDto.setNotificationDate(taskWithChanges.getNotificationDate());
-        }
-        repos.deleteById(id);
-        repos.saveAndFlush(converter.convertToTask(taskToEditDto));
-       return taskToEditDto;
     }
 
     @Override

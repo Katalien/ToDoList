@@ -2,8 +2,10 @@ package com.example.todo_list_project.service;
 
 import com.example.todo_list_project.dao.Tag;
 import com.example.todo_list_project.dao.Task;
+import com.example.todo_list_project.dao.UserAccount;
 import com.example.todo_list_project.dto.TagDto;
 import com.example.todo_list_project.dto.TaskDto;
+import com.example.todo_list_project.dto.UserAccountDto;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -45,5 +47,21 @@ public class Converter {
         tagDto.setId(tag.getId());
         tagDto.setTagName(tag.getTagName());
         return tagDto;
+    }
+
+    public UserAccountDto convertToUserDto(UserAccount user){
+        UserAccountDto userDto = new UserAccountDto();
+        userDto.setName(user.getName());
+        userDto.setEmail(user.getEmail());
+        userDto.setId(user.getId());
+        return userDto;
+    }
+
+    public UserAccount convertToUser(UserAccountDto userDto){
+        UserAccount user = new UserAccount();
+        user.setId(userDto.getId());
+        user.setName(userDto.getName());
+        user.setEmail(userDto.getEmail());
+        return user;
     }
 }

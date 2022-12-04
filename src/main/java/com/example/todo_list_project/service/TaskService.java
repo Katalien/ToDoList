@@ -13,7 +13,6 @@ public interface TaskService {
 
     List<TaskDto> getAll();
 
-    public TaskDto editTask(long id, TaskDto taskWithChanges);
 
     void deleteTask(long id);
 

@@ -13,6 +13,8 @@ public interface TagService {
 
     public List<TagDto> getAll() ;
 
+   void editTag(Long id, TagDto tagDto, String email);
+
     void deleteTag(long id);
 
 }

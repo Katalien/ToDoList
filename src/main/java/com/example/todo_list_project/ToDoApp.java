@@ -28,7 +28,7 @@ public class ToDoApp {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers("/api/v1/users").permitAll()
+                .antMatchers("/users").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .oauth2Login()
@@ -38,8 +38,8 @@ public class ToDoApp {
                 .and()
                 .csrf(csrf ->
                         csrf.csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()))
+                .logout()
         ;
-
         return http.build();
     }
 
