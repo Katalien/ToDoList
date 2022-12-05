@@ -1,8 +1,6 @@
 package com.example.todo_list_project.service;
-
 import com.example.todo_list_project.dto.SearchTasks;
 import com.example.todo_list_project.dto.TaskDto;
-
 import java.util.List;
 
 public interface TaskService {

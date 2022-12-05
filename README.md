@@ -22,13 +22,8 @@ The layer for all possible CRUD request
 
 
 ## Current Version
-- Since the last checkpoint user authorization was added. I've added web security dependencies and necessary classes to provide safe request from user and disable cors policy, which block request from user
-- User account was added and bound to task via sql relationship
-- All endpoints have been changes taking the user into account, therefore each user has its own list of tasks
-- I've begun to write patch request for task edition. However, it doesn't work correctly at the moment
-
-## Plans 
-- Fix task editing request
+- Fixed tag editing and deleting
+- Fixed task editing request
 
  
 

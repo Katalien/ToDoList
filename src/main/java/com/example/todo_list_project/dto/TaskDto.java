@@ -10,8 +10,6 @@ public class TaskDto {
     String name;
     String comment;
     Date eventDate;
-    Date notificationDate;
-    String status;
     String tagName;
     String userEmail;
 }

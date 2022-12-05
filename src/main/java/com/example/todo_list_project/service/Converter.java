@@ -1,5 +1,4 @@
 package com.example.todo_list_project.service;
-
 import com.example.todo_list_project.dao.Tag;
 import com.example.todo_list_project.dao.Task;
 import com.example.todo_list_project.dao.UserAccount;
@@ -57,11 +56,4 @@ public class Converter {
         return userDto;
     }
 
-    public UserAccount convertToUser(UserAccountDto userDto){
-        UserAccount user = new UserAccount();
-        user.setId(userDto.getId());
-        user.setName(userDto.getName());
-        user.setEmail(userDto.getEmail());
-        return user;
-    }
 }

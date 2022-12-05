@@ -1,7 +1,5 @@
 package com.example.todo_list_project.dao;
-
 import lombok.Data;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -19,5 +17,4 @@ public class UserAccount{
     private String name;
 
     private String email;
-
 }

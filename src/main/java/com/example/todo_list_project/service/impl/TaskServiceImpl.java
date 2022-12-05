@@ -1,5 +1,4 @@
 package com.example.todo_list_project.service.impl;
-
 import com.example.todo_list_project.dao.Tag;
 import com.example.todo_list_project.dao.Task;
 import com.example.todo_list_project.dto.SearchTasks;
@@ -11,7 +10,6 @@ import com.example.todo_list_project.service.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -82,5 +80,4 @@ public class TaskServiceImpl implements TaskService {
         }
         return tasksDto;
     }
-
 }

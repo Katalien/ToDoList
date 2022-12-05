@@ -1,7 +1,5 @@
 package com.example.todo_list_project.controller;
-
 import com.example.todo_list_project.dto.UserAccountDto;
-import com.example.todo_list_project.service.TaskService;
 import com.example.todo_list_project.service.UserAccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -18,7 +16,6 @@ public class UserController {
 
     @GetMapping("/users")
     public UserAccountDto getUser(@AuthenticationPrincipal OAuth2User principal) {
-        // пользователь не автоизован
         if (principal == null) {
             return null;
         }
@@ -29,6 +26,5 @@ public class UserController {
             UserAccountDto userDto= service.getUserByEmail(principal.getAttribute("email"));
             return userDto;
         }
-
     }
 }

@@ -1,9 +1,7 @@
 package com.example.todo_list_project.repository;
-
 import com.example.todo_list_project.dao.Task;
 import com.example.todo_list_project.dto.SearchTasks;
 import org.springframework.beans.factory.annotation.Autowired;
-
 import javax.persistence.EntityManager;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;

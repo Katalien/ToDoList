@@ -1,8 +1,6 @@
 package com.example.todo_list_project.service.impl;
-
 import com.example.todo_list_project.dao.UserAccount;
 import com.example.todo_list_project.dto.UserAccountDto;
-import com.example.todo_list_project.repository.TaskRepository;
 import com.example.todo_list_project.repository.UserAccountRepository;
 import com.example.todo_list_project.service.Converter;
 import com.example.todo_list_project.service.UserAccountService;
