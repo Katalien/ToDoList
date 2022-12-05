@@ -14,9 +14,7 @@ public class Converter {
         task.setName(taskDto.getName());
         task.setComment(taskDto.getComment());
         task.setId(taskDto.getId());
-        task.setStatus(taskDto.getStatus());
         task.setEventDate(taskDto.getEventDate());
-        task.setNotificationDate(taskDto.getNotificationDate());
         return task;
     }
 
@@ -25,9 +23,7 @@ public class Converter {
         taskDto.setName(task.getName());
         taskDto.setComment(task.getComment());
         taskDto.setId(task.getId());
-        taskDto.setStatus(task.getStatus());
         taskDto.setEventDate(task.getEventDate());
-        taskDto.setNotificationDate(task.getNotificationDate());
         if(task.getTag() != null) {
             taskDto.setTagName(task.getTag().getTagName());
         }
